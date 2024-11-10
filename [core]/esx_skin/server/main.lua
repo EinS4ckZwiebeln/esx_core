@@ -1,3 +1,5 @@
+local skinCache<const> = {}
+
 RegisterNetEvent("esx_skin:save", function(skin)
     local xPlayer = ESX.GetPlayerFromId(source)
 
@@ -11,7 +13,7 @@ RegisterNetEvent("esx_skin:save", function(skin)
             xPlayer.setMaxWeight(defaultMaxWeight)
         end
     end
-
+    skinCache[xPlayer.identifier] = nil
     MySQL.update("UPDATE users SET skin = @skin WHERE identifier = @identifier", {
         ["@skin"] = json.encode(skin),
         ["@identifier"] = xPlayer.identifier,
@@ -35,7 +37,10 @@ end)
 
 ESX.RegisterServerCallback("esx_skin:getPlayerSkin", function(source, cb)
     local xPlayer = ESX.GetPlayerFromId(source)
-
+    if skinCache[xPlayer.identifier] then
+        local cached = skinCache[xPlayer.identifier]
+        return cb(cached.skin, cached.jobSkin)
+    end
     MySQL.query("SELECT skin FROM users WHERE identifier = @identifier", {
         ["@identifier"] = xPlayer.identifier,
     }, function(users)
@@ -49,7 +54,7 @@ ESX.RegisterServerCallback("esx_skin:getPlayerSkin", function(source, cb)
         if user.skin then
             skin = json.decode(user.skin)
         end
-
+        skinCache[xPlayer.identifier] = { skin = skin, jobSkin = jobSkin }
         cb(skin, jobSkin)
     end)
 end)

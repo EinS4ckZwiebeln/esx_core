@@ -1,7 +1,7 @@
 Config = {}
 
 -- for ox inventory, use Config.CustomInventory = "ox", for others, set to "resource_name"
-Config.CustomInventory = false
+Config.CustomInventory = "ox"
 
 Config.Accounts = {
     bank = {
@@ -18,7 +18,7 @@ Config.Accounts = {
     },
 }
 
-Config.StartingAccountMoney = { bank = 50000 }
+Config.StartingAccountMoney = { bank = 5000 }
 
 Config.StartingInventoryItems = false -- table/false
 
@@ -35,7 +35,7 @@ Config.AdminGroups = {
     ["admin"] = true,
 }
 
-Config.EnablePaycheck = true -- enable paycheck
+Config.EnablePaycheck = false -- enable paycheck
 Config.LogPaycheck = false -- Logs paychecks to a nominated Discord channel via webhook (default is false)
 Config.EnableSocietyPayouts = false -- pay from the society account that the player is employed at? Requirement: esx_society
 Config.MaxWeight = 24 -- the max inventory weight without a backpack
@@ -48,7 +48,7 @@ Config.Multichar = GetResourceState("esx_multicharacter") ~= "missing"
 Config.Identity = true -- Select a character identity data before they have loaded in (this happens by default with multichar)
 Config.DistanceGive = 4.0 -- Max distance when giving items, weapons etc.
 
-Config.AdminLogging = false -- Logs the usage of certain commands by those with group.admin ace permissions (default is false)
+Config.AdminLogging = true -- Logs the usage of certain commands by those with group.admin ace permissions (default is false)
 
 --------------------------------------------------------------------
 -- DO NOT CHANGE BELOW THIS LINE UNLESS YOU KNOW WHAT YOU ARE DOING
